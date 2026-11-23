@@ -1,8 +1,8 @@
 # Media playback CDN domains collected from LunaTV-config sources.
 # Incremental: domains are only ever added, never removed.
 # Maintained weekly by .github/workflows/update-media-rules.yml
-# Generated: 2026-11-23 10:47 UTC
-# Total: 113 domains
+# Generated: 2026-11-23 10:50 UTC
+# Total: 118 domains
 #
 # Usage (Mihomo/Clash rule provider):
 #   rule_providers:
@@ -47,7 +47,9 @@ payload:
   - 'hsm3.hwzcfz.com'
   - 'kkzycdn.com'
   - 'lsbbf11.com'
+  - 'p.bvvvvvvvvv1f.com'
   - 'p.jisuts.com'
+  - 'play.dyttzyv.com'
   - 'play.hhuus.com'
   - 'play.ly166.com'
   - 'play.maoyanplay.top'
@@ -76,6 +78,7 @@ payload:
   - 'v.lzcdn31.com'
   - 'v1.ppqrrs.com'
   - 'v10.ppqrrs.com'
+  - 'v11.qqqrst.com'
   - 'v12.adfg8.vip'
   - 'v12.ppqrrs.com'
   - 'v13.kuaichezym3u8.com'
@@ -100,6 +103,7 @@ payload:
   - 'v7.adfg8.vip'
   - 'v7.ppqrrs.com'
   - 'v8.adfg8.vip'
+  - 'v8.qqqrst.com'
   - 'video.msn17.com'
   - 'video30.hav36.com'
   - 'video31.hav36.com'
@@ -108,6 +112,7 @@ payload:
   - 'video40.bpzy1.com'
   - 'video44.hav36.com'
   - 'video45.bpzy1.com'
+  - 'vip.dytt-network.com'
   - 'vip.lz-cdn14.com'
   - 'vod.360zyx.vip'
   - 'vod.ffzy-bofang.com'
