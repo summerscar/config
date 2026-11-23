@@ -29,6 +29,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_DIR = os.path.join(ROOT, "media")
 HONGGUO_OUT = os.path.join(MEDIA_DIR, "hongguo-web.js")
 MARCO_OUT = os.path.join(MEDIA_DIR, "marcomovie.json")
+TVBOX_OUT = os.path.join(MEDIA_DIR, "tvbox.json")
 
 UA = "Mozilla/5.0 (compatible; config-generator/1.0)"
 
@@ -189,11 +190,11 @@ def write_hongguo(sources):
     print(f"wrote {HONGGUO_OUT} ({len(apis)} APIs, version {version_stamp()})")
 
 
-def write_marco(sources):
+def build_sites(sources):
+    """TVBox/MarcoMovie-compatible site array (all type=1 MacCMS APIs)."""
     sites = []
     seen_keys = set()
     for s in sources:
-        # key must be unique; reuse the domain part of the api URL when possible
         from urllib.parse import urlparse
 
         host = urlparse(s["api"]).netloc or s["id"]
@@ -212,6 +213,10 @@ def write_marco(sources):
                 "changeable": 0,
             }
         )
+    return sites
+
+
+def write_marco(sites):
     config = {"sites": sites}
     with open(MARCO_OUT, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
@@ -219,12 +224,30 @@ def write_marco(sources):
     print(f"wrote {MARCO_OUT} ({len(sites)} sites)")
 
 
+def write_tvbox(sites):
+    """Full TVBox config: same sites plus the standard empty shell fields."""
+    config = {
+        "spider": "",
+        "wallpaper": "",
+        "logo": "",
+        "sites": sites,
+        "lives": [],
+        "rules": [],
+    }
+    with open(TVBOX_OUT, "w", encoding="utf-8") as f:
+        json.dump(config, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    print(f"wrote {TVBOX_OUT} ({len(sites)} sites)")
+
+
 def main():
     os.makedirs(MEDIA_DIR, exist_ok=True)
     sources = load_upstream()
     print(f"upstream sources: {len(sources)}")
     write_hongguo(sources)
-    write_marco(sources)
+    sites = build_sites(sources)
+    write_marco(sites)
+    write_tvbox(sites)
 
 
 if __name__ == "__main__":

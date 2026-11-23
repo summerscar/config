@@ -8,6 +8,7 @@
 |---|---|---|
 | `media/hongguo-web.js` | hongguo-web | 全源聚合 JS 源，一次搜索并发查所有源，结果带源名徽标；首页分类保留父子层级，点击自动对源取详情 |
 | `media/marcomovie.json` | MarcoMovie | TVBox 格式 `sites` 配置，每个源为 `type:1` 苹果 CMS 接口 |
+| `media/tvbox.json` | TVBox / FongMi 等 | 标准 TVBox 完整配置：同样的 69 个 `type:1` 源，另带 `spider`/`wallpaper`/`logo`/`lives`/`rules` 空字段 |
 | `media/media-domains.yaml` | Clash / Mihomo | 媒体播放 CDN 域名规则集，包含 m3u8 主地址及其切片/TS 域名，供代理分流（通常设 DIRECT 直连），每周**增量**补充、只增不减 |
 | `media/LunaTV/` | 备份 / 直接使用 | 上游 6 个原始配置文件的镜像：`LunaTV-config.json/.txt`、`jin18.json/.txt`、`jingjian.json/.txt` |
 
@@ -29,6 +30,15 @@
    https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/marcomovie.json
    ```
 2. 或下载 `media/marcomovie.json` 本地导入。
+
+### TVBox / FongMi 等
+
+订阅地址（标准 TVBox JSON，可直接粘贴到「配置地址」）：
+```
+https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/tvbox.json
+```
+
+> 三个点播订阅（`marcomovie.json`、`tvbox.json`、`hongguo-web.js`）的源列表来自同一份上游数据，内容一致，只是封装格式不同。
 
 ## Clash / Mihomo 媒体域名规则集
 
