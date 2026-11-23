@@ -1,0 +1,73 @@
+# Media playback CDN domains collected from LunaTV-config sources.
+# Generated daily by .github/workflows/update-media-rules.yml
+# Generated: 2026-11-23 10:38 UTC
+# Total: 57 domains
+#
+# Usage (Mihomo/Clash rule provider):
+#   rule_providers:
+#     media:
+#       type: http
+#       format: yaml
+#       behavior: domain
+#       url: https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/media-domains.yaml
+#       path: ./rule_sets/media.yaml
+#       interval: 86400
+# Then add rule: RULE-SET(media, DIRECT)
+payload:
+  - '1080p.huyall.com'
+  - '2608.xbv2608.com'
+  - '2609.fhv2026.com'
+  - '2609.lajiao2026.com'
+  - '2609.lbsl2026.com'
+  - '2609.senlin2026.com'
+  - '2609.sysl2026.com'
+  - '2609.v155p.com'
+  - 'aim3u8.vip'
+  - 'aits1.vip'
+  - 'bf.qugt.com'
+  - 'bf3.qrtuv.com'
+  - 'c.baisiweiting.com'
+  - 'cklunlicaiji.com'
+  - 'ckzy3.com'
+  - 'dpew.erlgnf.com'
+  - 'g.xlzyd.com'
+  - 'gazbe.gmttj.com'
+  - 'hd.kuktxu.com'
+  - 'hsckey.yzn6b.xyz'
+  - 'hsckyun.yeffpe.com'
+  - 'hsm3.hwzcfz.com'
+  - 'lsbbf11.com'
+  - 'play.hhuus.com'
+  - 'play.xluuss.com'
+  - 'sghiwygwns.com'
+  - 'sm.tsbfzy.com'
+  - 'sryndbsfvd.com'
+  - 'super.ffzy-online6.com'
+  - 't27.cdn2020.com'
+  - 'ts1.yhzybf.com'
+  - 'tsbfask.com'
+  - 'tsbfnxx.com'
+  - 'ukzyvod3.ukubf5.com'
+  - 'v.didibo2.com'
+  - 'v.fengbao14.com'
+  - 'v.gsuus.com'
+  - 'v12.adfg8.vip'
+  - 'v2.adfg8.vip'
+  - 'v7.adfg8.vip'
+  - 'v8.adfg8.vip'
+  - 'video.msn17.com'
+  - 'video30.hav36.com'
+  - 'video31.hav36.com'
+  - 'video34.bpzy1.com'
+  - 'video36.msn17.com'
+  - 'video40.bpzy1.com'
+  - 'video44.hav36.com'
+  - 'vod.360zyx.vip'
+  - 'vod.ffzy-bofang.com'
+  - 'vod1.maowushi.com'
+  - 'vod12.wgslsw.com'
+  - 'vodcnd16.tix8opu.cn'
+  - 'voddadaizi5.com'
+  - 'vostrely.com'
+  - 'xj9.cdn-99.cc'
+  - 'xjzym3u-api.cdn-xj.cc'

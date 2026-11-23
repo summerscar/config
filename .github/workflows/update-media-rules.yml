@@ -1,0 +1,66 @@
+name: 每周更新媒体域名规则集
+
+on:
+  schedule:
+    # 每周一北京时间 09:00 (UTC 01:00)，错开每日订阅更新
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: media-rules-update
+  cancel-in-progress: false
+
+jobs:
+  update-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 校验 YAML 结构
+        run: |
+          python3 - <<'PY'
+          import sys
+          path = "media/media-domains.yaml"
+          lines = open(path, encoding="utf-8").read().splitlines()
+          if "payload:" not in lines:
+              sys.exit("缺少 payload:")
+          items = [l for l in lines if l.startswith("  - '")]
+          if not items:
+              sys.exit("payload 为空")
+          print(f"规则条目: {len(items)}")
+          PY
+
+      - name: 抓取播放域名并重新生成
+        run: python3 scripts/generate_media_rules.py
+
+      - name: 校验生成结果
+        run: |
+          python3 - <<'PY'
+          import sys
+          lines = open("media/media-domains.yaml", encoding="utf-8").read().splitlines()
+          items = [l for l in lines if l.startswith("  - '")]
+          if len(items) < 10:
+              sys.exit(f"域名过少({len(items)})，疑似抓取失败，放弃提交")
+          print(f"生成域名: {len(items)}")
+          PY
+
+      - name: 提交变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- media/media-domains.yaml; then
+            echo "规则集无变化，跳过提交"
+            exit 0
+          fi
+          git add media/media-domains.yaml
+          git commit -m "chore: 更新媒体播放域名规则集 ($(date -u +%Y-%m-%d))"
+          git push
