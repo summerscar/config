@@ -8,7 +8,8 @@
 |---|---|---|
 | `media/hongguo-web.js` | hongguo-web | 全源聚合 JS 源，一次搜索并发查所有源，结果带源名徽标；首页分类保留父子层级，点击自动对源取详情 |
 | `media/marcomovie.json` | MarcoMovie | TVBox 格式 `sites` 配置，每个源为 `type:1` 苹果 CMS 接口 |
-| `media/media-domains.yaml` | Clash / Mihomo | 媒体播放 CDN 域名规则集，包含 m3u8 主地址及其切片/TS 域名，供代理分流（通常设 DIRECT 直连） |
+| `media/media-domains.yaml` | Clash / Mihomo | 媒体播放 CDN 域名规则集，包含 m3u8 主地址及其切片/TS 域名，供代理分流（通常设 DIRECT 直连），每周**增量**补充、只增不减 |
+| `media/LunaTV/` | 备份 / 直接使用 | 上游 6 个原始配置文件的镜像：`LunaTV-config.json/.txt`、`jin18.json/.txt`、`jingjian.json/.txt` |
 
 ## 导入方式
 
@@ -61,10 +62,10 @@ rules:
 
 | Workflow | 频率 | 内容 |
 |---|---|---|
-| `.github/workflows/update.yml` | 每天 UTC 00:00（北京 08:00） | 拉取上游 `api_site`，剥离代理前缀、去重、生成两个订阅文件，有变化则提交 |
-| `.github/workflows/update-media-rules.yml` | 每周一 UTC 01:00（北京 09:00） | 抽样每个源、递归解析 m3u8 提取播放域名，重新生成规则集，有变化则提交 |
+| `.github/workflows/update.yml` | 每天 UTC 00:00（北京 08:00） | 拉取上游 `api_site` 生成两个订阅文件，并把上游 6 个原始配置（JSON/TXT）镜像到 `media/LunaTV/`，有变化则提交 |
+| `.github/workflows/update-media-rules.yml` | 每周一 UTC 01:00（北京 09:00） | 抽样每个源、递归解析 m3u8 提取播放域名，**增量合并**进规则集（只增不减），有新增则提交 |
 
-两个 workflow 均支持在 Actions 页面手动触发 `workflow_dispatch`。规则集任务若抓取异常（域名少于 10 个）会放弃提交，避免把坏数据写进仓库。
+两个 workflow 均支持在 Actions 页面手动触发 `workflow_dispatch`。规则集任务若抓取异常（域名少于 10 个）会放弃提交，避免把坏数据写进仓库；因采用增量合并，即使某次抓取不完整也不会丢失已有域名。
 
 ## 说明
 

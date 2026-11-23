@@ -35,7 +35,7 @@ FETCH_TIMEOUT = 8
 URL_RE = re.compile(r"https?://[^\s\"'<>\\]+")
 
 
-def http_get(url, timeout=FETCH_TIMEOUT, max_bytes=128 * 1024):
+def http_get(url, timeout=FETCH_TIMEOUT, max_bytes=4 * 1024 * 1024):
     try:
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -155,8 +155,18 @@ def load_sites():
 
 def main():
     sites = load_sites()
+    # Incremental: keep every domain already in the file, only ever add new ones.
+    existing = set()
+    if os.path.exists(OUT):
+        for line in open(OUT, encoding="utf-8"):
+            m = re.match(r"\s*-\s+'([^']+)'", line)
+            if m:
+                existing.add(m.group(1).strip().lower())
+    print(f"existing domains in rule file: {len(existing)}")
+
     print(f"probing {len(sites)} sites (up to {SAMPLES_PER_SITE} titles each)")
-    all_hosts = set()
+    all_hosts = set(existing)          # seed with history so nothing is ever dropped
+    new_hosts = set()
     with ThreadPoolExecutor(max_workers=12) as ex:
         futures = {ex.submit(probe_site, s): s for s in sites}
         done = 0
@@ -168,15 +178,19 @@ def main():
             except Exception:
                 hs = set()
             if hs:
+                fresh = hs - existing
+                new_hosts |= fresh
                 all_hosts |= hs
             if done % 10 == 0:
-                print(f"  probed {done}/{len(sites)} ... domains so far {len(all_hosts)}")
+                print(f"  probed {done}/{len(sites)} ... new domains so far {len(new_hosts)}")
 
     domains = sorted(all_hosts)
+    print(f"new domains added this run: {len(new_hosts)}" + (f" -> {sorted(new_hosts)[:10]}" if new_hosts else ""))
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
         "# Media playback CDN domains collected from LunaTV-config sources.",
-        "# Generated daily by .github/workflows/update-media-rules.yml",
+        "# Incremental: domains are only ever added, never removed.",
+        "# Maintained weekly by .github/workflows/update-media-rules.yml",
         f"# Generated: {stamp}",
         f"# Total: {len(domains)} domains",
         "#",
