@@ -1,7 +1,7 @@
 # Media playback CDN domains collected from LunaTV-config sources.
 # Generated daily by .github/workflows/update-media-rules.yml
-# Generated: 2026-11-23 10:38 UTC
-# Total: 57 domains
+# Generated: 2026-11-23 10:40 UTC
+# Total: 52 domains
 #
 # Usage (Mihomo/Clash rule provider):
 #   rule_providers:
@@ -24,13 +24,10 @@ payload:
   - '2609.v155p.com'
   - 'aim3u8.vip'
   - 'aits1.vip'
-  - 'bf.qugt.com'
   - 'bf3.qrtuv.com'
-  - 'c.baisiweiting.com'
   - 'cklunlicaiji.com'
   - 'ckzy3.com'
   - 'dpew.erlgnf.com'
-  - 'g.xlzyd.com'
   - 'gazbe.gmttj.com'
   - 'hd.kuktxu.com'
   - 'hsckey.yzn6b.xyz'
@@ -39,13 +36,10 @@ payload:
   - 'lsbbf11.com'
   - 'play.hhuus.com'
   - 'play.xluuss.com'
-  - 'sghiwygwns.com'
-  - 'sm.tsbfzy.com'
   - 'sryndbsfvd.com'
   - 'super.ffzy-online6.com'
   - 't27.cdn2020.com'
   - 'ts1.yhzybf.com'
-  - 'tsbfask.com'
   - 'tsbfnxx.com'
   - 'ukzyvod3.ukubf5.com'
   - 'v.didibo2.com'
@@ -62,6 +56,7 @@ payload:
   - 'video36.msn17.com'
   - 'video40.bpzy1.com'
   - 'video44.hav36.com'
+  - 'video45.bpzy1.com'
   - 'vod.360zyx.vip'
   - 'vod.ffzy-bofang.com'
   - 'vod1.maowushi.com'
