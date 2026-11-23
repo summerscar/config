@@ -8,7 +8,9 @@
 |---|---|---|
 | `media/hongguo-web.js` | hongguo-web | 全源聚合 JS 源，一次搜索并发查所有源，结果带源名徽标；首页分类保留父子层级，点击自动对源取详情 |
 | `media/marcomovie.json` | MarcoMovie | TVBox 格式 `sites` 配置，每个源为 `type:1` 苹果 CMS 接口 |
-| `media/tvbox.json` | TVBox / FongMi 等 | 标准 TVBox 完整配置：同样 69 个 `type:1` 点播源 + APTV 直播源（120 频道 m3u），另带 `spider`/`wallpaper`/`logo`/`rules` 空字段 |
+| `media/tvbox.json` | TVBox / FongMi 等 | **总集**：69 个源（正规 39 + 不正规 30）+ APTV 直播，另带 `spider`/`wallpaper`/`logo`/`rules` 空字段 |
+| `media/tvbox-normal.json` | TVBox（正规） | 仅 39 个正规源（🎬）+ APTV 直播 |
+| `media/tvbox-adult.json` | TVBox（不正规） | 仅 30 个成人源（🔞）+ APTV 直播 |
 | `media/media-domains.yaml` | Clash / Mihomo | 媒体播放 CDN 域名规则集，包含 m3u8 主地址及其切片/TS 域名，供代理分流（通常设 DIRECT 直连），每周**增量**补充、只增不减 |
 | `media/LunaTV/` | 备份 / 直接使用 | 上游 6 个原始配置文件的镜像：`LunaTV-config.json/.txt`、`jin18.json/.txt`、`jingjian.json/.txt` |
 
@@ -33,14 +35,17 @@
 
 ### TVBox / FongMi 等
 
-订阅地址（标准 TVBox JSON，可直接粘贴到「配置地址」）：
-```
-https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/tvbox.json
-```
+三份都是标准 TVBox JSON，按需要选一份粘贴到「配置地址」：
 
-点播为上游 69 个苹果 CMS 源；直播为 [APTV iptv.m3u](https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u)（约 120 频道，含 CCTV/卫视，带 EPG），已写入 `lives` 字段。
+| 版本 | 订阅地址 |
+|---|---|
+| 总集（69 源） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/tvbox.json` |
+| 正规（39 源 🎬） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/tvbox-normal.json` |
+| 不正规（30 源 🔞） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/tvbox-adult.json` |
 
-> 三个点播订阅（`marcomovie.json`、`tvbox.json`、`hongguo-web.js`）的源列表来自同一份上游数据，内容一致，只是封装格式不同。
+三份的直播均为 [APTV iptv.m3u](https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u)（约 120 频道，含 CCTV/卫视，带 EPG），已写入 `lives` 字段。正规/不正规按上游源名里的 🎬/🔞 标记划分。
+
+> 点播订阅（`marcomovie.json`、三份 `tvbox*.json`、`hongguo-web.js`）的源列表来自同一份上游数据，只是封装格式/筛选范围不同。
 
 ## Clash / Mihomo 媒体域名规则集
 

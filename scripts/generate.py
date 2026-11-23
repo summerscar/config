@@ -30,6 +30,8 @@ MEDIA_DIR = os.path.join(ROOT, "media")
 HONGGUO_OUT = os.path.join(MEDIA_DIR, "hongguo-web.js")
 MARCO_OUT = os.path.join(MEDIA_DIR, "marcomovie.json")
 TVBOX_OUT = os.path.join(MEDIA_DIR, "tvbox.json")
+TVBOX_NORMAL_OUT = os.path.join(MEDIA_DIR, "tvbox-normal.json")
+TVBOX_ADULT_OUT = os.path.join(MEDIA_DIR, "tvbox-adult.json")
 
 UA = "Mozilla/5.0 (compatible; config-generator/1.0)"
 
@@ -190,11 +192,19 @@ def write_hongguo(sources):
     print(f"wrote {HONGGUO_OUT} ({len(apis)} APIs, version {version_stamp()})")
 
 
-def build_sites(sources):
-    """TVBox/MarcoMovie-compatible site array (all type=1 MacCMS APIs)."""
+def build_sites(sources, adult=None):
+    """TVBox/MarcoMovie-compatible site array (all type=1 MacCMS APIs).
+
+    adult=None -> all sources; True -> only 🔞 sources; False -> only normal ones.
+    """
     sites = []
     seen_keys = set()
     for s in sources:
+        is_adult = "🔞" in s.get("name", "")
+        if adult is True and not is_adult:
+            continue
+        if adult is False and is_adult:
+            continue
         from urllib.parse import urlparse
 
         host = urlparse(s["api"]).netloc or s["id"]
@@ -224,8 +234,8 @@ def write_marco(sites):
     print(f"wrote {MARCO_OUT} ({len(sites)} sites)")
 
 
-def write_tvbox(sites):
-    """Full TVBox config: same sites plus the standard empty shell fields."""
+def write_tvbox(sites, out=TVBOX_OUT):
+    """Full TVBox config: sites + live TV + standard empty shell fields."""
     config = {
         "spider": "",
         "wallpaper": "",
@@ -241,10 +251,10 @@ def write_tvbox(sites):
         ],
         "rules": [],
     }
-    with open(TVBOX_OUT, "w", encoding="utf-8") as f:
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    print(f"wrote {TVBOX_OUT} ({len(sites)} sites)")
+    print(f"wrote {out} ({len(sites)} sites)")
 
 
 def main():
@@ -252,9 +262,11 @@ def main():
     sources = load_upstream()
     print(f"upstream sources: {len(sources)}")
     write_hongguo(sources)
-    sites = build_sites(sources)
-    write_marco(sites)
-    write_tvbox(sites)
+    write_marco(build_sites(sources))
+    # TVBox: three flavors — all / normal(🎬) / adult(🔞), all with the same live TV.
+    write_tvbox(build_sites(sources), TVBOX_OUT)
+    write_tvbox(build_sites(sources, adult=False), TVBOX_NORMAL_OUT)
+    write_tvbox(build_sites(sources, adult=True), TVBOX_ADULT_OUT)
 
 
 if __name__ == "__main__":
