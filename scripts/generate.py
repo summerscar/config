@@ -231,7 +231,14 @@ def write_tvbox(sites):
         "wallpaper": "",
         "logo": "",
         "sites": sites,
-        "lives": [],
+        "lives": [
+            {
+                "name": "APTV直播",
+                "type": 0,
+                "url": "https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
+                "playerType": 2,
+            }
+        ],
         "rules": [],
     }
     with open(TVBOX_OUT, "w", encoding="utf-8") as f:

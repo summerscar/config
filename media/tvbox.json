@@ -625,6 +625,13 @@
       "changeable": 0
     }
   ],
-  "lives": [],
+  "lives": [
+    {
+      "name": "APTV直播",
+      "type": 0,
+      "url": "https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
+      "playerType": 2
+    }
+  ],
   "rules": []
 }
