@@ -29,6 +29,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_DIR = os.path.join(ROOT, "media")
 HONGGUO_OUT = os.path.join(MEDIA_DIR, "hongguo-web.js")
 MARCO_OUT = os.path.join(MEDIA_DIR, "marcomovie.json")
+MARCO_NORMAL_OUT = os.path.join(MEDIA_DIR, "marcomovie-normal.json")
+MARCO_ADULT_OUT = os.path.join(MEDIA_DIR, "marcomovie-adult.json")
 TVBOX_OUT = os.path.join(MEDIA_DIR, "tvbox.json")
 TVBOX_NORMAL_OUT = os.path.join(MEDIA_DIR, "tvbox-normal.json")
 TVBOX_ADULT_OUT = os.path.join(MEDIA_DIR, "tvbox-adult.json")
@@ -226,12 +228,12 @@ def build_sites(sources, adult=None):
     return sites
 
 
-def write_marco(sites):
+def write_marco(sites, out=MARCO_OUT):
     config = {"sites": sites}
-    with open(MARCO_OUT, "w", encoding="utf-8") as f:
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    print(f"wrote {MARCO_OUT} ({len(sites)} sites)")
+    print(f"wrote {out} ({len(sites)} sites)")
 
 
 def write_tvbox(sites, out=TVBOX_OUT):
@@ -262,8 +264,11 @@ def main():
     sources = load_upstream()
     print(f"upstream sources: {len(sources)}")
     write_hongguo(sources)
-    write_marco(build_sites(sources))
-    # TVBox: three flavors — all / normal(🎬) / adult(🔞), all with the same live TV.
+    # MarcoMovie & TVBox: three flavors — all / normal(🎬) / adult(🔞).
+    write_marco(build_sites(sources), MARCO_OUT)
+    write_marco(build_sites(sources, adult=False), MARCO_NORMAL_OUT)
+    write_marco(build_sites(sources, adult=True), MARCO_ADULT_OUT)
+    # TVBox: same three site sets, plus the same live TV in each.
     write_tvbox(build_sites(sources), TVBOX_OUT)
     write_tvbox(build_sites(sources, adult=False), TVBOX_NORMAL_OUT)
     write_tvbox(build_sites(sources, adult=True), TVBOX_ADULT_OUT)

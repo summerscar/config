@@ -7,7 +7,9 @@
 | 文件 | 用于 | 说明 |
 |---|---|---|
 | `media/hongguo-web.js` | hongguo-web | 全源聚合 JS 源，一次搜索并发查所有源，结果带源名徽标；首页分类保留父子层级，点击自动对源取详情 |
-| `media/marcomovie.json` | MarcoMovie | TVBox 格式 `sites` 配置，每个源为 `type:1` 苹果 CMS 接口 |
+| `media/marcomovie.json` | MarcoMovie（总集） | 69 个源（正规 39 + 不正规 30），TVBox 格式 `sites` 配置，每个源为 `type:1` 苹果 CMS 接口 |
+| `media/marcomovie-normal.json` | MarcoMovie（正规） | 仅 39 个正规源（🎬） |
+| `media/marcomovie-adult.json` | MarcoMovie（不正规） | 仅 30 个成人源（🔞） |
 | `media/tvbox.json` | TVBox / FongMi 等 | **总集**：69 个源（正规 39 + 不正规 30）+ APTV 直播，另带 `spider`/`wallpaper`/`logo`/`rules` 空字段 |
 | `media/tvbox-normal.json` | TVBox（正规） | 仅 39 个正规源（🎬）+ APTV 直播 |
 | `media/tvbox-adult.json` | TVBox（不正规） | 仅 30 个成人源（🔞）+ APTV 直播 |
@@ -27,11 +29,15 @@
 
 ### MarcoMovie
 
-1. 在应用的配置导入处填入订阅地址：
-   ```
-   https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/marcomovie.json
-   ```
-2. 或下载 `media/marcomovie.json` 本地导入。
+同样分三份，按需要选一份填入应用的配置地址：
+
+| 版本 | 订阅地址 |
+|---|---|
+| 总集（69 源） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/marcomovie.json` |
+| 正规（39 源 🎬） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/marcomovie-normal.json` |
+| 不正规（30 源 🔞） | `https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/marcomovie-adult.json` |
+
+或下载对应文件本地导入。
 
 ### TVBox / FongMi 等
 
@@ -45,7 +51,7 @@
 
 三份的直播均为 [APTV iptv.m3u](https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u)（约 120 频道，含 CCTV/卫视，带 EPG），已写入 `lives` 字段。正规/不正规按上游源名里的 🎬/🔞 标记划分。
 
-> 点播订阅（`marcomovie.json`、三份 `tvbox*.json`、`hongguo-web.js`）的源列表来自同一份上游数据，只是封装格式/筛选范围不同。
+> 所有点播订阅（三份 `marcomovie*.json`、三份 `tvbox*.json`、`hongguo-web.js`）的源列表来自同一份上游数据，只是封装格式/筛选范围不同。正规/不正规均按源名里的 🎬/🔞 标记划分。
 
 ## Clash / Mihomo 媒体域名规则集
 
