@@ -283,7 +283,7 @@ var IDS = Object.keys(APIS);
 var spider = {
   id: 'lunatv_all',
   name: 'LunaTV全源聚合',
-  version: '2026.11.25',
+  version: '2026.11.26',
   updateUrl: 'https://raw.githubusercontent.com/summerscar/config/refs/heads/main/media/hongguo-web.js',
   home: async function () {
     try {
